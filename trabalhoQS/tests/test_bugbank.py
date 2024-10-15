@@ -6,7 +6,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-from utils import *
+from trabalhoQS.utils import *
 
 @pytest.fixture(scope="module")
 def browser():
