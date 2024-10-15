@@ -15,7 +15,7 @@ def browser():
     driver.quit()
 
 def test_login_invalido(browser):
-    browser.get("https://bugbank.netlify.app/")
+    browser.get(URL_LOGIN_PAGE)
     browser.find_element(By.NAME, "email").send_keys("usuario@exemplo.com")
     browser.find_element(By.NAME, "password").send_keys("senha123")
     browser.find_element(By.XPATH, "//button[text()='Acessar']").click()
@@ -27,9 +27,21 @@ def test_cadastro_novo_usuario(browser):
 
 def test_login_valido(browser):
     criar_usuario(browser)
-    browser.get("https://bugbank.netlify.app/")
-    browser.find_element(By.NAME, "email").send_keys(CORRECT_USER_EMAIL)
-    browser.find_element(By.NAME, "password").send_keys(CORRECT_USER_PASSWORD)
-    browser.find_element(By.XPATH, "//button[text()='Acessar']").click()
-    WebDriverWait(browser, 10).until(EC.url_contains("home"))
+    realizar_login(browser)
     assert "home" in browser.current_url
+
+
+def test_logout(browser):
+    criar_usuario(browser)
+    realizar_login(browser)
+
+    browser.find_element(By.ID, "btnExit").click()
+    WebDriverWait(browser, 10).until(EC.url_matches(URL_LOGIN_PAGE))
+
+    assert browser.current_url == URL_LOGIN_PAGE
+
+def test_acessar_pagina_usuario_sem_estar_autenticado(browser):
+    browser.get(URL_USER_PROFILE)
+    WebDriverWait(browser, 10).until(EC.url_matches(URL_LOGIN_PAGE))
+    assert browser.current_url == URL_LOGIN_PAGE
+
