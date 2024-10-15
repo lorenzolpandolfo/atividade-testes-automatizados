@@ -1,5 +1,6 @@
 import pytest
-from usuario import Usuario, Banco
+from usuario import Usuario
+from banco import Banco
 
 @pytest.fixture
 def banco():
@@ -20,7 +21,6 @@ def usuario_bloqueado():
     banco = Banco()
     banco.bloquear_usuario(usuario)
     return usuario
-
 
 def test_registrar_usuario_valido(banco, usuario_valido):
     """Teste para registrar um usuário válido."""

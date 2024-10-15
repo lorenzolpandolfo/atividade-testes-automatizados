@@ -11,7 +11,7 @@ class Banco:
             self.usuarios.append(usuario)
     
     def validar_usuario(self, usuario: Usuario) -> bool:
-        return usuario.idade < 18
+        return usuario.idade > 18
 
     def bloquear_usuario(self, usuario: Usuario) -> None:
         if usuario.ativo:
